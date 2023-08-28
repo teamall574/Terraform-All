@@ -9,13 +9,24 @@ resource "aws_instance" "public-instances" {
 
 }
 resource "null_resource" "execute" {
-
+depends_on = [aws_instance.public-instances]
     connection {
         type = "ssh"
         host = aws_instance.foo.public_ip
         user = "ubuntu"
         private_key = "${file("test.pem")}"
     }
+    provisioner "file" {
+    source      = "anji.sh"
+    destination = "/tmp/anji.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/anji.sh",
+      "/tmp/anji.sh",
+    ]
+  }
 
     provisioner "local-exec" {
     command = "echo '${aws_instance.foo.public_ip}' > instance_ip.txt"
@@ -32,7 +43,5 @@ resource "null_resource" "execute" {
         "sudo docker run -d -p 27017:27017 -e username=mongoadmin -e mongo_password=password -e mango_database=test  mongo",
         "docker ps",
         ]
-    }
-    depends_on = [aws_instance.foo]
-  
+    }  
 }
