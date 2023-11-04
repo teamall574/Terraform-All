@@ -7,6 +7,7 @@ resource "aws_instance" "public-Instances" {
     subnet_id = "${element(aws_subnet.public-subnets.*.id, count.index}"
     vpc_security_group_ids = ["${aws_security_group.allow_all.id}]
     associate_public_ip_address = true
+    user_data = templatefile["./install.sh"] ##this also onetype
     user_data = <<-EOF
               #!/bin/bash
               curl -fsSL https://raw.githubusercontent.com/your-repo/anji.sh | bash
