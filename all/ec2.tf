@@ -1,6 +1,6 @@
 resource "aws_instance" "public-Instances" {
-    count = "${var.environment == "prod" ? 3 : 1}"
-    ami = "${lookup(var.amis, var.aws_region, "ap-south-1")}"
+    count = "${var.environment == "prod" ? 3 : 1}"   if var.env == prod then it will create 3 if not 1 ec2 instance
+    ami = "${lookup(var.amis, var.aws_region, "ap-south-1")}"    it will create ap-south-1 ec2 instance ami id only
     instance_type = var.env == "PROD" ? "t3.large" : "t2.micro"   ##if the env == prod it will deploy t3.large instance
     key_name = "chefkeypair"
     user_data = file("apache-install.sh")
