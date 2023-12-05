@@ -1,5 +1,5 @@
-aws_access_key = "AKIASF7HYLTT4AJATHZX"
-aws_secret_key = "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"
+aws_access_key = "knlk"
+aws_secret_key = "Bs2b/kjbkl"
 aws_region = "us-east-1"
 vpc_cidr = "10.1.0.0/16"
 vpc_name = "single-instance"
